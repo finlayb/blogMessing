@@ -1,0 +1,39 @@
+{"blogPosts": [
+		{
+			"title":"BLOG POST 1",
+			"text":"Content text 1",
+			"image-large":"images/image1.jpg",
+			"tags":"fun, joy, blog"
+		},
+		{
+			"title":"BLOG POST 2",
+			"text":"Content text 2",
+			"image-large":"images/image2.jpg",
+			"tags":"fun, lols, blog"
+		},
+		{
+			"title":"BLOG POST 3",
+			"text":"Content text 3",
+			"image-large":"images/image2.jpg",
+			"tags":"fun, lols, blog"
+		},
+		{
+			"title":"BLOG POST 4",
+			"text":"Content text 4",
+			"image-large":"images/image2.jpg",
+			"tags":"fun, lols, blog"
+		},
+		{
+			"title":"BLOG POST 5",
+			"text":"Content text 5",
+			"image-large":"images/image2.jpg",
+			"tags":"fun, lols, blog"
+		},
+		{
+			"title":"BLOG POST 6",
+			"text":"Content text 6",
+			"image-large":"images/image2.jpg",
+			"tags":"fun, lols, blog"
+		}
+	]
+}
