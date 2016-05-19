@@ -1,2 +1,2 @@
 # blogMessing
-Just messin' about with stuff.
+Messin' about with stuff.
