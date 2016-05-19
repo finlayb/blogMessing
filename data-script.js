@@ -9,6 +9,7 @@ jqueryNoConflict(document).ready(function(){
 // grab data
 function retriveData() {
     var dataSource = 'content.json';
+    //FIN! MODIFY THE DATA HERE!!
     jqueryNoConflict.getJSON(dataSource, renderDataVisualsTemplate);
 };
 
