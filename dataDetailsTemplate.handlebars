@@ -3,10 +3,12 @@
     {{debug}}
     <h2>This is a handlebars template</h2>
     {{#blogPosts}}
-        <h3>{{title}}</h3>
-        <p>{{text}}</p>
-        <img src="{{image-large}}">
-        <p>{{tags}}</p>
+    	<div id="image-div" style="width:500px; height:200px; background-color: yellow;">
+	        <h3>{{title}}</h3>
+	        <p>{{text}}</p>
+	        <img src="{{image-large}}">
+	        <p>{{tags}}</p>
+	    </div>
         <!-- <a href="{{imageLarge}}" target="_blank"><em>{{Source}}</em></a></p>!-->
     {{/blogPosts}}
 

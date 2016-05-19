@@ -1,5 +1,7 @@
 var jqueryNoConflict = jQuery;
 
+var currentImageID = 0
+
 //begin main function
 jqueryNoConflict(document).ready(function(){
     retrieveData();
@@ -16,7 +18,7 @@ function retrieveData() {
 function renderDataVisualsTemplate(data){
     handlebarsDebugHelper();
 
-    data.blogPosts = data.blogPosts.slice(0, 2); //TRUNCATES ARRAY
+    data.blogPosts = data.blogPosts[currentImageID]//data.blogPosts.slice(0, currentImageID); //TRUNCATES ARRAY
     console.log(data.blogPosts)
 
     renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', data);
@@ -51,6 +53,45 @@ function handlebarsDebugHelper(){
     });
 };
 
+var getQueryString = function ( field, url ) {
+    var href = url ? url : window.location.href;
+    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var string = reg.exec(href);
+    return string ? string[1] : null;
+};
+
+var var1 = getQueryString('page'); // returns 'chicken'
+//var var2 = getQueryString('that'); // returns 'sandwich'
+console.log(var1);
+
+
+
+//Get a reference to the link on the page
+// with an id of "mylink"
+var button1 = document.getElementById("pictureButton1");
+var button2 = document.getElementById("pictureButton2");
+
+//Set code to run when the link is clicked
+// by assigning a function to "onclick"
+button1.onclick = button2.onclick = function() {
+    document.getElementById("image-div").remove();
+
+    if(this.id=="pictureButton1"){
+        currentImageID-=1;
+    }else{
+        currentImageID+=1;
+    }
+    retrieveData();
+
+    //If you don't want the link to actually 
+    // redirect the browser to another page,
+    // "google.com" in our example here, then
+    // return false at the end of this block.
+    // Note that this also prevents event bubbling,
+    // which is probably what we want here, but won't 
+    // always be the case.
+    return false;
+}
 
 /*
 (function() {
