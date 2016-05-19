@@ -2,20 +2,23 @@ var jqueryNoConflict = jQuery;
 
 //begin main function
 jqueryNoConflict(document).ready(function(){
-    retriveData();
+    retrieveData();
 });
 //end main function
 
 // grab data
-function retriveData() {
+function retrieveData() {
     var dataSource = 'content.json';
-    //FIN! MODIFY THE DATA HERE!!
     jqueryNoConflict.getJSON(dataSource, renderDataVisualsTemplate);
 };
 
 // render compiled handlebars template
 function renderDataVisualsTemplate(data){
     handlebarsDebugHelper();
+
+    data.blogPosts = data.blogPosts.slice(0, 2); //TRUNCATES ARRAY
+    console.log(data.blogPosts)
+
     renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', data);
 };
 
