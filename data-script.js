@@ -1,6 +1,8 @@
 var jqueryNoConflict = jQuery;
 
 var currentImageID = 0
+var searchTerm = "joy"
+var tempArray = []
 
 //begin main function
 jqueryNoConflict(document).ready(function(){
@@ -18,10 +20,37 @@ function retrieveData() {
 function renderDataVisualsTemplate(data){
     handlebarsDebugHelper();
 
-    data.blogPosts = data.blogPosts[currentImageID]//data.blogPosts.slice(0, currentImageID); //TRUNCATES ARRAY
-    console.log(data.blogPosts)
+    //data.blogPosts = data.blogPosts[currentImageID]//data.blogPosts.slice(0, currentImageID); //TRUNCATES ARRAY
+    //console.log(data.blogPosts)
+    for (var key in data.blogPosts) {
+      if (data.blogPosts.hasOwnProperty(key)) { //if entry exists
+        var stringOfTags = data.blogPosts[key].tags //put tags for entry into var
+        var toSplit = stringOfTags.replace(", ",",").split(","); // define splitting character
+        for (var i = 0; i < toSplit.length; i++) { //loop through
+            //json.push({"email":toSplit[i]});
+            //console.log(toSplit[i])
+            //console.log(searchTerm)
+            //console.log(toSplit[i])
+            if(searchTerm==toSplit[i]){
+                tempArray.push(data.blogPosts[key]);
+            }
+            //break;
+            //if(searchTerm==toSplit[i]){
+                //console.log(key)
+                //tempArray.push(data.blogPosts[key]);
+            //}
+        }
 
-    renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', data);
+        //alert(key + " -> " + data.blogPosts[key].tags);
+
+
+
+      }
+    }
+
+    //data.blogPosts = 
+    console.log(data)
+    renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', {blogPosts:tempArray}); //tempArray was data // using curly bracket stuff to put array into an object
 };
 
 // render handlebars templates via ajax
