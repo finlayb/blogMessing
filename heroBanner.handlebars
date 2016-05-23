@@ -1,0 +1,17 @@
+<div>
+
+    {{debug}}
+    <h2>This is a handlebars template</h2>
+    {{#photos}}
+    	<div id="image-div" style="width:900px; height:200px; background-color: yellow;">
+	        <!--<h2>{{title}}</h2>
+	        <p>{{text}}</p>-->
+            <div id="hero-photo-{{@index}}">
+	           <img src="images/{{id}}.jpg">
+            </div>
+	        <!--<p>{{tags}}</p>-->
+	    </div>
+        <!-- <a href="{{imageLarge}}" target="_blank"><em>{{Source}}</em></a></p>!-->
+    {{/photos}}
+
+</div>

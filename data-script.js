@@ -1,8 +1,11 @@
 var jqueryNoConflict = jQuery;
 
 var currentImageID = 0
-var searchTerm = "joy"
-var tempArray = []
+var searchTerm
+var page = 0;
+var fullData = []
+
+var maxPostsPerPage = 4
 
 //begin main function
 jqueryNoConflict(document).ready(function(){
@@ -11,46 +14,23 @@ jqueryNoConflict(document).ready(function(){
 //end main function
 
 // grab data
-function retrieveData() {
-    var dataSource = 'content.json';
+function retrieveData() { //getting the JSON data
+    dataSource = 'content.json';
     jqueryNoConflict.getJSON(dataSource, renderDataVisualsTemplate);
 };
 
 // render compiled handlebars template
 function renderDataVisualsTemplate(data){
-    handlebarsDebugHelper();
-
+    //handlebarsDebugHelper();
+    fullData = data
+    fulldata2 = data
     //data.blogPosts = data.blogPosts[currentImageID]//data.blogPosts.slice(0, currentImageID); //TRUNCATES ARRAY
-    //console.log(data.blogPosts)
-    for (var key in data.blogPosts) {
-      if (data.blogPosts.hasOwnProperty(key)) { //if entry exists
-        var stringOfTags = data.blogPosts[key].tags //put tags for entry into var
-        var toSplit = stringOfTags.replace(", ",",").split(","); // define splitting character
-        for (var i = 0; i < toSplit.length; i++) { //loop through
-            //json.push({"email":toSplit[i]});
-            //console.log(toSplit[i])
-            //console.log(searchTerm)
-            //console.log(toSplit[i])
-            if(searchTerm==toSplit[i]){
-                tempArray.push(data.blogPosts[key]);
-            }
-            //break;
-            //if(searchTerm==toSplit[i]){
-                //console.log(key)
-                //tempArray.push(data.blogPosts[key]);
-            //}
-        }
-
-        //alert(key + " -> " + data.blogPosts[key].tags);
-
-
-
-      }
-    }
-
-    //data.blogPosts = 
-    console.log(data)
-    renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', {blogPosts:tempArray}); //tempArray was data // using curly bracket stuff to put array into an object
+    
+    //path, where to put it, data
+    renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', {blogPosts:filterBlogPostsByTag(searchTerm)}); //filteredPosts was data // using curly bracket stuff to put array into an object
+    
+    renderHandlebarsTemplate('heroBanner.handlebars', '#hero-banner', {photos:getHeroPhotos()});
+    renderHandlebarsTemplate('categoryList.handlebars', '#category-list', {tags:listUsedCategories()});
 };
 
 // render handlebars templates via ajax
@@ -66,7 +46,7 @@ function getTemplateAjax(path, callback) {
     });
 };
 
-// function to compile handlebars template
+// function to compile handlebars template //path, where to put it, data
 function renderHandlebarsTemplate(withTemplate,inElement,withData){
     getTemplateAjax(withTemplate, function(template) {
         jqueryNoConflict(inElement).html(template(withData));
@@ -89,9 +69,131 @@ var getQueryString = function ( field, url ) {
     return string ? string[1] : null;
 };
 
-var var1 = getQueryString('page'); // returns 'chicken'
-//var var2 = getQueryString('that'); // returns 'sandwich'
-console.log(var1);
+searchTerm = getQueryString('searchTerm');
+page = getQueryString('page'); // returns 'sandwich'
+//console.log(var1);
+
+function filterBlogPostsByTag(searchTerm){
+    var tagSearchResults = []
+    var searchPath = fullData.blogPosts
+    for (var k in searchPath) {
+      if (searchPath.hasOwnProperty(k)) { //if entry exists
+        var stringOfTags = searchPath[k].tags //put tags for entry into var
+        var toSplit = stringOfTags.split(","); // define splitting character
+        for (var i = 0; i < toSplit.length; i++) { //loop through
+            if(searchTerm==toSplit[i]){
+                tagSearchResults.push(searchPath[k]);
+            }
+        }
+      }
+    }
+
+    if(tagSearchResults.length>maxPostsPerPage){
+        var startCut = (page*5)-5
+        var endCut = startCut+maxPostsPerPage+1
+        //console.log(startCut)
+        tagSearchResults = tagSearchResults.slice(startCut,endCut)
+
+
+        //showNextButton();
+    }
+
+    return tagSearchResults
+}
+
+function getHeroPhotos(){
+    var searchTerm = "showcase"
+    var tagSearchResults = []
+    var searchPath = fullData.photos
+    for (var k in searchPath) {
+      if (searchPath.hasOwnProperty(k)) { //if entry exists
+        var stringOfTags = searchPath[k].tags //put tags for entry into var
+        var toSplit = stringOfTags.split(","); // define splitting character
+        for (var i = 0; i < toSplit.length; i++) { //loop through
+            if(searchTerm==toSplit[i]){
+                tagSearchResults.push(searchPath[k]);
+                //console.log(toSplit[i] + "ASD")
+            }
+        }
+      }
+    }
+    //console.log(tagSearchResults)
+    setUpHeroBanner(toSplit.length)
+    return tagSearchResults
+}
+
+function listUsedCategories(){
+    var searchPath = fullData.blogPosts
+    var allTags = []
+    //var uniqueTags = []
+    for (var k in searchPath) {
+        if (searchPath.hasOwnProperty(k)) {
+            var stringOfTags = searchPath[k].tags //put tags for entry into var
+            var arrayOfSplitTags = stringOfTags.split(","); // seperate tags by ',' and chuck them in an array
+            for (var i = 0; i < arrayOfSplitTags.length; i++) { //loop through
+                //console.log("")
+                allTags.push({tag:arrayOfSplitTags[i]});
+            }
+        }
+    }
+    var allUniqueTags = removeDuplicatesFromArray(allTags)
+    allUniqueTags.sort(alphabetical);
+    return allUniqueTags
+}
+
+function removeDuplicatesFromArray(array) {
+    var seen = {};
+    return array.filter(function(item) {
+        return seen.hasOwnProperty(item.tag) ? false : (seen[item.tag] = true);
+    });
+}
+
+function alphabetical(a, b)
+{
+     var A = a.tag.toLowerCase();
+     var B = b.tag.toLowerCase();
+     if (A < B){
+        return -1;
+     }else if (A > B){
+       return  1;
+     }else{
+       return 0;
+     }
+}
+
+function categoryLinkClick(text){
+    //searchTerm = getQueryString('searchTerm'); // returns 'chicken'
+    searchTerm = text.textContent
+    window.open("index.html?searchTerm="+searchTerm+"&"+"page="+"1","_self")
+    //console.log(searchTerm)
+    //retrieveData();
+    return false;
+}
+/*
+function getFilteredPosts(searchTerm){
+    for (var key in fullData.blogPosts) {
+      if (fullData.blogPosts.hasOwnProperty(key)) { //if entry exists
+        var stringOfTags = fullData.blogPosts[key].tags //put tags for entry into var
+        var toSplit = stringOfTags.replace(", ",",").split(","); // define splitting character
+        for (var i = 0; i < toSplit.length; i++) { //loop through
+            //json.push({"email":toSplit[i]});
+            //console.log(toSplit[i])
+            //console.log(searchTerm)
+            //console.log(toSplit[i])
+            if(searchTerm==toSplit[i]){
+                filteredPosts.push(fullData.blogPosts[key]);
+            }
+            //break;
+            //if(searchTerm==toSplit[i]){
+                //console.log(key)
+                //filteredPosts.push(data.blogPosts[key]);
+            //}
+        }
+
+        //alert(key + " -> " + data.blogPosts[key].tags);
+      }
+    }
+}*/
 
 
 
@@ -106,9 +208,12 @@ button1.onclick = button2.onclick = function() {
     document.getElementById("image-div").remove();
 
     if(this.id=="pictureButton1"){
-        currentImageID-=1;
+        var newPage = Number(page)-1
+        console.log(newPage)
+        window.open("index.html?searchTerm="+searchTerm+"&"+"page="+newPage,"_self")
     }else{
-        currentImageID+=1;
+        var newPage = Number(page)+1
+        window.open("index.html?searchTerm="+searchTerm+"&"+"page="+newPage,"_self")
     }
     retrieveData();
 
@@ -120,6 +225,15 @@ button1.onclick = button2.onclick = function() {
     // which is probably what we want here, but won't 
     // always be the case.
     return false;
+}
+
+function setUpHeroBanner(numberOfItems){
+            
+    for (var i = 0; i < numberOfItems-1; i++) {
+        //console.log($('#hero-photo-'+i).css('display'))
+        //setTimeout( console.log($('#hero-photo-'+i).css('display')) , 2000);
+        console.log( $('#hero-photo-'+i) )
+    }
 }
 
 /*
@@ -139,3 +253,11 @@ button1.onclick = button2.onclick = function() {
       });
     });
 })();*/
+
+
+
+
+////////TESTING
+
+
+////////TESTING

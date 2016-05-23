@@ -1,39 +1,113 @@
 {"blogPosts": [
 		{
 			"title":"BLOG POST 1",
-			"text":"Content text 1",
+			"text":"Content text",
 			"image-large":"images/image1.jpg",
-			"tags":"fun, joy, blog"
+			"tags":"one,joy,blog"
 		},
 		{
 			"title":"BLOG POST 2",
-			"text":"Content text 2",
+			"text":"Content text",
 			"image-large":"images/image2.jpg",
-			"tags":"fun, lols, blog"
+			"tags":"two,lols,blog"
 		},
 		{
 			"title":"BLOG POST 3",
-			"text":"Content text 3",
+			"text":"Content text",
 			"image-large":"images/image2.jpg",
-			"tags":"fun, lols, blog"
+			"tags":"fun,lols,blog"
 		},
 		{
 			"title":"BLOG POST 4",
-			"text":"Content text 4",
+			"text":"Content text",
 			"image-large":"images/image2.jpg",
-			"tags":"fun, lols, blog"
+			"tags":"fun,lols,blog"
 		},
 		{
 			"title":"BLOG POST 5",
-			"text":"Content text 5",
+			"text":"Content text",
 			"image-large":"images/image2.jpg",
-			"tags":"fun, lols, blog"
+			"tags":"fun,lols,blog"
 		},
 		{
 			"title":"BLOG POST 6",
-			"text":"Content text 6",
+			"text":"Content text",
 			"image-large":"images/image2.jpg",
-			"tags":"fun, lols, blog"
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 7",
+			"text":"Content text",
+			"image-large":"images/image2.jpg",
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 8",
+			"text":"Content text",
+			"image-large":"images/image2.jpg",
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 9",
+			"text":"Content text",
+			"image-large":"images/image2.jpg",
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 10",
+			"text":"Content text",
+			"image-large":"images/image2.jpg",
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 11",
+			"text":"Content text",
+			"image-large":"images/image2.jpg",
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 12",
+			"text":"Content text",
+			"image-large":"images/image2.jpg",
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 13",
+			"text":"Content text",
+			"image-large":"images/image2.jpg",
+			"tags":"fun,lols,blog"
+		}
+	],
+"photos": [
+		{
+			"title":"IMAGE 1",
+			"text":"Content text",
+			"id":"image-fun-1",
+			"tags":"one,joy,blog,showcase"
+		},
+		{
+			"title":"BLOG POST 2",
+			"text":"Content text",
+			"id":"image-fun-1",
+			"tags":"two,lols,blog"
+		},
+		{
+			"title":"BLOG POST 3",
+			"text":"Content text",
+			"id":"image-fun-3",
+			"tags":"fun,lols,blog"
+		},
+		{
+			"title":"BLOG POST 4",
+			"text":"Content text",
+			"id":"image-fun-4",
+			"tags":"fun,lols,blog,showcase"
+		},
+		{
+			"title":"BLOG POST 5",
+			"text":"Content text",
+			"id":"image-fun-5",
+			"tags":"fun,lols,blog,showcase"
 		}
 	]
 }
