@@ -29,7 +29,7 @@ function renderDataVisualsTemplate(data){
     //path, where to put it, data
     renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', {blogPosts:filterBlogPostsByTag(searchTerm)}); //filteredPosts was data // using curly bracket stuff to put array into an object
     
-    renderHandlebarsTemplate('heroBanner.handlebars', '#hero-banner', {photos:getHeroPhotos()});
+    renderHandlebarsTemplate('heroBanner.handlebars', '#hero-banner', {photos:getHeroPhotos()}, setUpHeroBanner);
     renderHandlebarsTemplate('categoryList.handlebars', '#category-list', {tags:listUsedCategories()});
 };
 
@@ -47,9 +47,11 @@ function getTemplateAjax(path, callback) {
 };
 
 // function to compile handlebars template //path, where to put it, data
-function renderHandlebarsTemplate(withTemplate,inElement,withData){
+function renderHandlebarsTemplate(withTemplate,inElement,withData, cb){
     getTemplateAjax(withTemplate, function(template) {
         jqueryNoConflict(inElement).html(template(withData));
+        if(typeof cb ==="function"){cb()};
+        console.log(cb)
     })
 };
 
@@ -118,7 +120,7 @@ function getHeroPhotos(){
       }
     }
     //console.log(tagSearchResults)
-    setUpHeroBanner(toSplit.length)
+    //setUpHeroBanner(toSplit.length)
     return tagSearchResults
 }
 
@@ -228,11 +230,14 @@ button1.onclick = button2.onclick = function() {
 }
 
 function setUpHeroBanner(numberOfItems){
-            
-    for (var i = 0; i < numberOfItems-1; i++) {
+    var photoID = 0;
+    while ($('#hero-photo-'+photoID).length) {
         //console.log($('#hero-photo-'+i).css('display'))
         //setTimeout( console.log($('#hero-photo-'+i).css('display')) , 2000);
-        console.log( $('#hero-photo-'+i) )
+        //console.log(  )
+
+        $('#hero-photo-'+photoID).hide()
+        photoID++;
     }
 }
 
