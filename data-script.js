@@ -14,22 +14,23 @@ jqueryNoConflict(document).ready(function(){
 //end main function
 
 // grab data
-function retrieveData() { //getting the JSON data
+function retrieveData() { //get the JSON data and if the request succeeds, then call renderDataVisualsTemplate
     dataSource = 'content.json';
-    jqueryNoConflict.getJSON(dataSource, renderDataVisualsTemplate);
+    jsonData = jqueryNoConflict.getJSON(dataSource, renderDataVisualsTemplate);
 };
 
 // render compiled handlebars template
 function renderDataVisualsTemplate(data){
     //handlebarsDebugHelper();
     fullData = data
-    fulldata2 = data
     //data.blogPosts = data.blogPosts[currentImageID]//data.blogPosts.slice(0, currentImageID); //TRUNCATES ARRAY
     
-    //path, where to put it, data
+    //passing path to handlebars template, where to put it in the html, data
     renderHandlebarsTemplate('dataDetailsTemplate.handlebars', '#data-details', {blogPosts:filterBlogPostsByTag(searchTerm)}); //filteredPosts was data // using curly bracket stuff to put array into an object
     
+    //we're passing a fourth param here, which is a function.
     renderHandlebarsTemplate('heroBanner.handlebars', '#hero-banner', {photos:getHeroPhotos()}, setUpHeroBanner);
+
     renderHandlebarsTemplate('categoryList.handlebars', '#category-list', {tags:listUsedCategories()});
 };
 
@@ -46,12 +47,13 @@ function getTemplateAjax(path, callback) {
     });
 };
 
-// function to compile handlebars template //path, where to put it, data
+// function to compile handlebars template //path to handlebars template, where to put it in the html, data
+// IF cb is a function (aka if it's been passed), then call this function after handlebars template is rendered
 function renderHandlebarsTemplate(withTemplate,inElement,withData, cb){
     getTemplateAjax(withTemplate, function(template) {
         jqueryNoConflict(inElement).html(template(withData));
         if(typeof cb ==="function"){cb()};
-        console.log(cb)
+        //console.log(cb)
     })
 };
 
