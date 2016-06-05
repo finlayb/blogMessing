@@ -92,17 +92,31 @@ function filterBlogPostsByTag(searchTerm){
       }
     }
 
+    if(tagSearchResults.length>(page*5)-1){
+        $('#next-page-button').show();
+                //showNextPrevButtons(tagSearchResults.length);
+    }else{
+        $('#next-page-button').hide();
+    }
+    if(page<2){
+       $('#prev-page-button').hide(); 
+    }else{
+        $('#prev-page-button').show(); 
+    }
+
     if(tagSearchResults.length>maxPostsPerPage){
         var startCut = (page*5)-5
         var endCut = startCut+maxPostsPerPage+1
         //console.log(startCut)
         tagSearchResults = tagSearchResults.slice(startCut,endCut)
-
-
-        //showNextButton();
     }
 
     return tagSearchResults
+}
+
+function showNextPrevButtons(){
+    $('#next-page-button'+photoID).hide()
+    $('#next-page-button'+photoID).hide()
 }
 
 function getHeroPhotos(){
@@ -203,15 +217,15 @@ function getFilteredPosts(searchTerm){
 
 //Get a reference to the link on the page
 // with an id of "mylink"
-var button1 = document.getElementById("pictureButton1");
-var button2 = document.getElementById("pictureButton2");
+var button1 = document.getElementById("prev-page-button");
+var button2 = document.getElementById("next-page-button");
 
 //Set code to run when the link is clicked
 // by assigning a function to "onclick"
 button1.onclick = button2.onclick = function() {
     document.getElementById("image-div").remove();
 
-    if(this.id=="pictureButton1"){
+    if(this.id=="prev-page-button"){
         var newPage = Number(page)-1
         console.log(newPage)
         window.open("index.html?searchTerm="+searchTerm+"&"+"page="+newPage,"_self")
@@ -238,7 +252,26 @@ function setUpHeroBanner(numberOfItems){
         //setTimeout( console.log($('#hero-photo-'+i).css('display')) , 2000);
         //console.log(  )
 
-        $('#hero-photo-'+photoID).hide()
+        if(photoID!=0){
+            $('#hero-photo-'+photoID).hide()
+        }
+        photoID++;
+    }
+}
+
+function heroSelect(id){
+
+    var photoID = 0;
+     while ($('#hero-photo-'+photoID).length) {
+        //console.log($('#hero-photo-'+i).css('display'))
+        //setTimeout( console.log($('#hero-photo-'+i).css('display')) , 2000);
+        //console.log(  )
+
+        if(photoID!=id){
+            $('#hero-photo-'+photoID).hide()
+        }else{
+            $('#hero-photo-'+photoID).show()
+        }
         photoID++;
     }
 }

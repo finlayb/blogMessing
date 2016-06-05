@@ -1,17 +1,21 @@
-<div>
-
-    {{debug}}
-    <h2>This is a handlebars template</h2>
+<div style="position:relative;">
+    <div id="image-div" style="width:900px; height:400px; overflow:hidden;">
     {{#photos}}
-    	<div id="image-div" style="width:900px; height:200px; background-color: yellow;">
 	        <!--<h2>{{title}}</h2>
 	        <p>{{text}}</p>-->
-            <div id="hero-photo-{{@index}}">
+            <div id="hero-photo-{{@index}}" style="position:relative;">
 	           <img src="images/{{id}}.jpg">
             </div>
 	        <!--<p>{{tags}}</p>-->
-	    </div>
+
         <!-- <a href="{{imageLarge}}" target="_blank"><em>{{Source}}</em></a></p>!-->
     {{/photos}}
+    </div>
+
+    <div id="hero-pips" style="position:absolute; width:100%; top:350px; left:0; text-align: center">
+    {{#photos}}
+        <a onclick="heroSelect({{@index}})" href="#/"><i style="color:white;" class="fa fa-circle" aria-hidden="true"></i></a>
+    {{/photos}}
+    </div>
 
 </div>
